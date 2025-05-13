@@ -1,0 +1,37 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "Food"
+    label: "음식(Food)"
+    folder: "Blog/Food"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "제목", name: "title", widget: "string" }
+      - { label: "작성일", name: "date", widget: "datetime" }
+      - { label: "본문", name: "body", widget: "markdown" }
+
+  - name: "Performance"
+    label: "공연(Performance)"
+    folder: "Blog/Performance"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "제목", name: "title", widget: "string" }
+      - { label: "작성일", name: "date", widget: "datetime" }
+      - { label: "본문", name: "body", widget: "markdown" }
+
+  - name: "Diary"
+    label: "일기(Diary)"
+    folder: "Blog/Diary"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "제목", name: "title", widget: "string" }
+      - { label: "작성일", name: "date", widget: "datetime" }
+      - { label: "본문", name: "body", widget: "markdown" }
