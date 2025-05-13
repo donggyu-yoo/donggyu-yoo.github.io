@@ -2,18 +2,36 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "images"
-public_folder: "/images"
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
 
 collections:
-  - name: "blog"
-    label: "Blog"
-    folder: "posts/life"
+  - name: "Food"
+    label: "Food"
+    folder: "Blog/Food"
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    slug: "{{slug}}"
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Date", name: "date", widget: "datetime" }
-      - { label: "Body", name: "body", widget: "markdown" }
-      - { label: "Category", name: "category", widget: "select", options: ["life", "tech", "notes"] }
-      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "제목", name: "title", widget: "string" }
+      - { label: "작성일", name: "date", widget: "datetime" }
+      - { label: "본문", name: "body", widget: "markdown" }
+
+  - name: "Performance"
+    label: "Performance"
+    folder: "Blog/Performance"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "제목", name: "title", widget: "string" }
+      - { label: "작성일", name: "date", widget: "datetime" }
+      - { label: "본문", name: "body", widget: "markdown" }
+
+  - name: "Diary"
+    label: "Diary"
+    folder: "Blog/Diary"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "제목", name: "title", widget: "string" }
+      - { label: "작성일", name: "date", widget: "datetime" }
+      - { label: "본문", name: "body", widget: "markdown" }
