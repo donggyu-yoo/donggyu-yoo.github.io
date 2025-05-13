@@ -1,121 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Website</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #333;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-        }
-        nav {
-            display: flex;
-            justify-content: center;
-            background-color: #444;
-        }
-        nav a {
-            color: white;
-            padding: 14px 20px;
-            text-decoration: none;
-            text-align: center;
-        }
-        nav a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-        .hero {
-            background: url('photo/background_photo.jpeg') no-repeat center center/cover;
-            background-size: cover;
-            height: 500px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-align: center;
-        }
-        .hero h1 {
-            font-size: 4em;
-            margin: 0;
-        }
-        .profile-photo {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 20px 0;
-        }
-        .profile-photo img {
-            border-radius: 50%;
-            width: 300px;
-            height: 300px;
-        }
-        .content {
-            padding: 20px;
-        }
-        #about {
-            background-color: #f9f9f9;
-        }
-        #portfolio {
-            background-color: #e9e9e9;
-        }
-        #contact {
-            background-color: #d9d9d9;
-        }
-        .content h2 {
-            text-align: center;
-        }
-        .content p {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Personal Blog</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    .post {
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+    }
+    .post-date {
+      color: #999;
+      font-size: 0.9em;
+    }
+    nav {
+      margin-bottom: 2rem;
+    }
+    nav a {
+      margin-right: 1rem;
+      text-decoration: none;
+      color: #3498db;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Dong-gyu Yoo, M.Sc.</h1>
-    </header>
+  <header>
+    <h1>My Blog</h1>
     <nav>
-        <a href="#about">About</a>
-        <a href="#portfolio">Portfolio</a>
-        <a href="#contact">Contact</a>
-        <a href="cv.pdf" target="_blank">CV</a>
+      <a href="#">Home</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
     </nav>
-    <div class="hero">
-        <h1>Welcome to My Website</h1>
-    </div>
-    <div class="profile-photo">
-        <img src="photo/profile_photo.jpeg" alt="Profile Photo">
-    </div>
-    <div class="content" id="about">
-        <h2>About Me</h2>
-        <p>This is a section where you can introduce yourself.</p>
-    </div>
-    <div class="content" id="portfolio">
-        <h2>Portfolio</h2>
-        <p>Showcase your work here.</p>
-    </div>
-    <div class="content" id="contact">
-        <h2>Contact</h2>
-        <p>Provide your contact information here.</p>
-    </div>
-    <footer>
-        &copy; 2024 Dong-gyu Yoo
-    </footer>
+  </header>
+
+  <section class="post">
+    <h2>First Post</h2>
+    <div class="post-date">May 13, 2025</div>
+    <p>This is my first blog post. I'll be sharing what I’ve worked on and learned over time here.</p>
+  </section>
+
+  <section class="post">
+    <h2>Another Day, Another Update</h2>
+    <div class="post-date">May 12, 2025</div>
+    <p>Documenting my progress helps me stay motivated and track my growth.</p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 My Blog. All rights reserved.</p>
+  </footer>
 </body>
 </html>
