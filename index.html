@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Personal Blog</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -12,18 +13,17 @@
       padding: 2rem;
       background-color: #f9f9f9;
       color: #333;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark-mode {
+      background-color: #1e1e1e;
+      color: #ccc;
     }
     h1, h2 {
       color: #2c3e50;
     }
-    .post {
-      border-bottom: 1px solid #ddd;
-      margin-bottom: 2rem;
-      padding-bottom: 1rem;
-    }
-    .post-date {
-      color: #999;
-      font-size: 0.9em;
+    body.dark-mode h1, body.dark-mode h2 {
+      color: #f2f2f2;
     }
     nav {
       margin-bottom: 2rem;
@@ -36,32 +36,52 @@
     nav a:hover {
       text-decoration: underline;
     }
+    #darkModeToggle {
+      float: right;
+      cursor: pointer;
+      background: none;
+      border: 1px solid #ccc;
+      padding: 0.3rem 0.6rem;
+      border-radius: 5px;
+    }
+    .post-content {
+      margin-bottom: 2rem;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>My Blog</h1>
+    <h1>My Blog <button id="darkModeToggle">🌙</button></h1>
     <nav>
-      <a href="#">Home</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+      <a href="#" onclick="loadPost('2025-05-13-first-post.md')">First Post</a>
+      <a href="#" onclick="loadPost('2025-05-12-another-update.md')">Another Update</a>
     </nav>
   </header>
 
-  <section class="post">
-    <h2>First Post</h2>
-    <div class="post-date">May 13, 2025</div>
-    <p>This is my first blog post. I'll be sharing what I’ve worked on and learned over time here.</p>
-  </section>
-
-  <section class="post">
-    <h2>Another Day, Another Update</h2>
-    <div class="post-date">May 12, 2025</div>
-    <p>Documenting my progress helps me stay motivated and track my growth.</p>
+  <section id="post" class="post-content">
+    <p>Select a post to view its content.</p>
   </section>
 
   <footer>
     <p>&copy; 2025 My Blog. All rights reserved.</p>
   </footer>
+
+  <script>
+    function loadPost(filename) {
+      fetch(`posts/${filename}`)
+        .then(res => res.text())
+        .then(md => {
+          document.getElementById('post').innerHTML = marked.parse(md);
+        })
+        .catch(err => {
+          document.getElementById('post').innerHTML = '<p>Error loading post.</p>';
+          console.error(err);
+        });
+    }
+
+    document.getElementById('darkModeToggle').addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+    });
+  </script>
 </body>
 </html>
