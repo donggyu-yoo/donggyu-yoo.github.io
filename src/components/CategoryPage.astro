@@ -1,0 +1,62 @@
+---
+export interface Props {
+  category: string;
+  title: string; // This includes the emoji + label like "🍽 음식(Food)"
+}
+
+const { category, title } = Astro.props;
+
+const allPosts = await import.meta.glob('../pages/Blog/*/*.md', { eager: true });
+
+const posts = Object.entries(allPosts)
+  .map(([path, post]) => {
+    const pathParts = path.split('/');
+    const postCategory = pathParts[pathParts.length - 2];
+
+    if (postCategory !== category) return null;
+
+    return {
+      url: path.replace('../pages', '').replace('.md', '/'),
+      title: post.frontmatter.title,
+      date: post.frontmatter.date,
+    };
+  })
+  .filter(Boolean)
+  .sort((a, b) => new Date(b.date) - new Date(a.date));
+---
+
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{title} - 동규의 블로그</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <aside class="sidebar">
+        <h2>카테고리</h2>
+        <ul>
+          <li><a href="/Blog/Food/">🍽 음식(Food)</a></li>
+          <li><a href="/Blog/Performance/">🎭 공연(Performance)</a></li>
+          <li><a href="/Blog/Diary/">📔 일기(Diary)</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+        <h1>{title}</h1>
+        <p>{title}와 관련된 게시글:</p>
+
+        <ul>
+          {posts.map(post => (
+            <li>
+              <a href={post.url}>{post.title}</a><br />
+              <small>{new Date(post.date).toLocaleDateString('ko-KR')}</small>
+            </li>
+          ))}
+        </ul>
+
+        <p><a href="/">← 홈으로 돌아가기</a></p>
+      </main>
+    </div>
+  </body>
+</html>
