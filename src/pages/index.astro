@@ -1,36 +1,20 @@
 ---
-import fs from 'node:fs';
-import path from 'node:path';
-import { parse } from 'yaml';
-import { marked } from 'marked';
+const postFiles = await import.meta.glob('./Blog/*/*.md', { eager: true });
 
-// Helper to read all Markdown files from all category folders
-const categories = ['Food', 'Performance', 'Diary'];
-const posts = [];
+const posts = Object.entries(postFiles).map(([path, post]) => {
+  const pathParts = path.split('/');
+  const category = pathParts[pathParts.length - 2]; // e.g., "Food"
 
-for (const category of categories) {
-  const dir = path.resolve(Astro.srcDir, 'pages', 'Blog', category);
-  if (fs.existsSync(dir)) {
-    const files = fs.readdirSync(dir).filter(file => file.endsWith('.md'));
-    for (const file of files) {
-      const content = fs.readFileSync(path.join(dir, file), 'utf-8');
-      const frontmatter = content.match(/^---\n([\s\S]*?)\n---/);
-      if (frontmatter) {
-        const metadata = parse(frontmatter[1]);
-        posts.push({
-          ...metadata,
-          url: `/Blog/${category}/${file.replace(/\.md$/, '/')}`,
-          category
-        });
-      }
-    }
-  }
-}
+  return {
+    url: path.replace('./', '/').replace('.md', '/'),
+    title: post.frontmatter.title,
+    date: post.frontmatter.date,
+    category,
+  };
+});
 
-// Sort by date (most recent first)
 posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 ---
-
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
@@ -55,7 +39,9 @@ posts.sort((a, b) => new Date(b.date) - new Date(a.date));
         <ul>
           {posts.map(post => (
             <li>
-              <a href={post.url}><strong>[{post.category}]</strong> {post.title}</a><br />
+              <a href={post.url}>
+                <strong>[{post.category}]</strong> {post.title}
+              </a><br />
               <small>{new Date(post.date).toLocaleDateString('ko-KR')}</small>
             </li>
           ))}
