@@ -1,44 +1,33 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-export interface Props {
-  category: string;
-  title: string; // Ex: "🍽 음식(Food)"
-}
+const postFiles = await import.meta.glob('./Blog/*/*.md', { eager: true });
 
-const { category, title } = Astro.props;
+const posts = Object.entries(postFiles).map(([path, post]) => {
+  const parts = path.split('/');
+  const category = parts[parts.length - 2];
 
-const allPosts = await import.meta.glob('../pages/Blog/*/*.md', { eager: true });
-
-const posts = Object.entries(allPosts)
-  .map(([path, post]) => {
-    const pathParts = path.split('/');
-    const postCategory = pathParts[pathParts.length - 2];
-
-    if (postCategory !== category) return null;
-
-    return {
-      url: path.replace('../pages', '').replace('.md', '/'),
-      title: post.frontmatter.title,
-      date: post.frontmatter.date,
-    };
-  })
-  .filter(Boolean)
-  .sort((a, b) => new Date(b.date) - new Date(a.date));
+  return {
+    url: path.replace('./', '/').replace('.md', '/'),
+    title: post.frontmatter.title,
+    date: post.frontmatter.date,
+    category,
+  };
+}).sort((a, b) => new Date(b.date) - new Date(a.date));
 ---
 
-<BaseLayout title={title + ' - 동규의 블로그'}>
-  <h1>{title}</h1>
-  <p>{title}와 관련된 게시글:</p>
+<BaseLayout title="동규의 블로그">
+  <h1>동규의 블로그</h1>
+  <p>최근 게시글을 확인하세요:</p>
 
   <ul>
     {posts.map(post => (
       <li class="post-card">
-        <a href={post.url} class="post-title">{post.title}</a><br />
+        <a href={post.url} class="post-title">
+          <strong>[{post.category}]</strong> {post.title}
+        </a><br />
         <small class="post-date">{new Date(post.date).toLocaleDateString('ko-KR')}</small>
       </li>
     ))}
   </ul>
-
-  <p><a href="/">← 홈으로 돌아가기</a></p>
 </BaseLayout>
