@@ -17,7 +17,7 @@ collections:
     fields:
       - { label: "제목", name: "title", widget: "string" }
       - { label: "작성일", name: "date", widget: "datetime" }
-      - { label: "본문", name: "body", widget: "markdown", modes: ["raw"]}
+      - { label: "본문", name: "body", widget: "markdown" }
       - { label: "레이아웃", name: "layout", widget: "hidden", default: "../../../layouts/PostLayout.astro" }
 
   - name: "performance"
@@ -30,7 +30,7 @@ collections:
     fields:
       - { label: "제목", name: "title", widget: "string" }
       - { label: "작성일", name: "date", widget: "datetime" }
-      - { label: "본문", name: "body", widget: "markdown", modes: ["raw"]}
+      - { label: "본문", name: "body", widget: "markdown" }
       - { label: "레이아웃", name: "layout", widget: "hidden", default: "../../../layouts/PostLayout.astro" }
 
   - name: "diary"
@@ -43,5 +43,5 @@ collections:
     fields:
       - { label: "제목", name: "title", widget: "string" }
       - { label: "작성일", name: "date", widget: "datetime" }
-      - { label: "본문", name: "body", widget: "markdown", modes: ["raw"]}
+      - { label: "본문", name: "body", widget: "markdown" }
       - { label: "레이아웃", name: "layout", widget: "hidden", default: "../../../layouts/PostLayout.astro" }
