@@ -1,7 +1,7 @@
 ---
 export interface Props {
   category: string;
-  title: string; // This includes the emoji + label like "🍽 음식(Food)"
+  title: string;
 }
 
 const { category, title } = Astro.props;
@@ -30,6 +30,7 @@ const posts = Object.entries(allPosts)
     <meta charset="UTF-8" />
     <title>{title} - 동규의 블로그</title>
     <link rel="stylesheet" href="/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
   </head>
   <body>
     <div class="container">

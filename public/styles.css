@@ -1,19 +1,30 @@
+/* Font & Reset */
 body {
   font-family: "Noto Sans KR", sans-serif;
+  line-height: 1.6;
   margin: 0;
   padding: 0;
+  background-color: #f9fafb;
+  color: #1f2937;
 }
 
+/* Layout */
 .container {
   display: flex;
   max-width: 1000px;
   margin: 0 auto;
   padding: 2rem;
+  gap: 2rem;
 }
 
+/* Sidebar */
 .sidebar {
-  width: 200px;
-  padding-right: 2rem;
+  width: 220px;
+}
+
+.sidebar h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .sidebar ul {
@@ -22,9 +33,65 @@ body {
 }
 
 .sidebar li {
-  margin-bottom: 10px;
+  margin-bottom: 0.75rem;
 }
 
+.sidebar a {
+  text-decoration: none;
+  color: #3b82f6;
+}
+
+.sidebar a:hover {
+  text-decoration: underline;
+}
+
+/* Content area */
 .content {
   flex: 1;
+}
+
+.content h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.content p {
+  margin-bottom: 2rem;
+}
+
+/* Post List (Cards) */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  transition: transform 0.15s ease-in-out;
+}
+
+li:hover {
+  transform: translateY(-2px);
+}
+
+li a {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+  text-decoration: none;
+}
+
+li a:hover {
+  color: #3b82f6;
+}
+
+small {
+  color: #6b7280;
+  font-size: 0.875rem;
 }
