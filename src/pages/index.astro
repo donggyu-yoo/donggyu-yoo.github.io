@@ -1,16 +1,66 @@
 ---
+import fs from 'node:fs';
+import path from 'node:path';
+import { parse } from 'yaml';
+import { marked } from 'marked';
 
+// Helper to read all Markdown files from all category folders
+const categories = ['Food', 'Performance', 'Diary'];
+const posts = [];
+
+for (const category of categories) {
+  const dir = path.resolve(Astro.srcDir, 'pages', 'Blog', category);
+  if (fs.existsSync(dir)) {
+    const files = fs.readdirSync(dir).filter(file => file.endsWith('.md'));
+    for (const file of files) {
+      const content = fs.readFileSync(path.join(dir, file), 'utf-8');
+      const frontmatter = content.match(/^---\n([\s\S]*?)\n---/);
+      if (frontmatter) {
+        const metadata = parse(frontmatter[1]);
+        posts.push({
+          ...metadata,
+          url: `/Blog/${category}/${file.replace(/\.md$/, '/')}`,
+          category
+        });
+      }
+    }
+  }
+}
+
+// Sort by date (most recent first)
+posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>동규의 블로그</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <aside class="sidebar">
+        <h2>카테고리</h2>
+        <ul>
+          <li><a href="/Blog/Food/">🍽 음식</a></li>
+          <li><a href="/Blog/Performance/">🎭 문화</a></li>
+          <li><a href="/Blog/Diary/">📔 일기</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+        <h1>동규의 블로그</h1>
+        <p>최근 게시글을 확인하세요:</p>
+
+        <ul>
+          {posts.map(post => (
+            <li>
+              <a href={post.url}><strong>[{post.category}]</strong> {post.title}</a><br />
+              <small>{new Date(post.date).toLocaleDateString('ko-KR')}</small>
+            </li>
+          ))}
+        </ul>
+      </main>
+    </div>
+  </body>
 </html>
