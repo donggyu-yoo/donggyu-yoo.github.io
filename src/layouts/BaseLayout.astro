@@ -1,0 +1,45 @@
+---
+export interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrapper">
+        <a href="/" class="site-title">동규의 블로그</a>
+      </div>
+    </header>
+
+    <div class="container">
+      <aside class="sidebar">
+        <h2>카테고리</h2>
+        <ul>
+          <li><a href="/Blog/Food/">🍽 음식(Food)</a></li>
+          <li><a href="/Blog/Performance/">🎭 공연(Performance)</a></li>
+          <li><a href="/Blog/Diary/">📔 일기(Diary)</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+        <slot />
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <div class="wrapper">
+        <p>&copy; {new Date().getFullYear()} 동규의 블로그</p>
+      </div>
+    </footer>
+  </body>
+</html>

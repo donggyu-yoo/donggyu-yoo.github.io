@@ -1,53 +1,44 @@
 ---
-const postFiles = await import.meta.glob('./Blog/*/*.md', { eager: true });
+import BaseLayout from '../layouts/BaseLayout.astro';
 
-const posts = Object.entries(postFiles).map(([path, post]) => {
-  const pathParts = path.split('/');
-  const category = pathParts[pathParts.length - 2]; // e.g., "Food"
+export interface Props {
+  category: string;
+  title: string; // Ex: "🍽 음식(Food)"
+}
 
-  return {
-    url: path.replace('./', '/').replace('.md', '/'),
-    title: post.frontmatter.title,
-    date: post.frontmatter.date,
-    category,
-  };
-});
+const { category, title } = Astro.props;
 
-posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+const allPosts = await import.meta.glob('../pages/Blog/*/*.md', { eager: true });
+
+const posts = Object.entries(allPosts)
+  .map(([path, post]) => {
+    const pathParts = path.split('/');
+    const postCategory = pathParts[pathParts.length - 2];
+
+    if (postCategory !== category) return null;
+
+    return {
+      url: path.replace('../pages', '').replace('.md', '/'),
+      title: post.frontmatter.title,
+      date: post.frontmatter.date,
+    };
+  })
+  .filter(Boolean)
+  .sort((a, b) => new Date(b.date) - new Date(a.date));
 ---
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <title>동규의 블로그</title>
-    <link rel="stylesheet" href="/styles.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div class="container">
-      <aside class="sidebar">
-        <h2>카테고리</h2>
-        <ul>
-          <li><a href="/Blog/Food/">🍽 음식(Food)</a></li>
-          <li><a href="/Blog/Performance/">🎭 공연(Performance)</a></li>
-          <li><a href="/Blog/Diary/">📔 일기(Diary)</a></li>
-        </ul>
-      </aside>
 
-      <main class="content">
-        <h1>동규의 블로그</h1>
-        <p>최근 게시글을 확인하세요:</p>
+<BaseLayout title={title + ' - 동규의 블로그'}>
+  <h1>{title}</h1>
+  <p>{title}와 관련된 게시글:</p>
 
-        <ul>
-          {posts.map(post => (
-            <li>
-              <a href={post.url}>
-                <strong>[{post.category}]</strong> {post.title}
-              </a><br />
-              <small>{new Date(post.date).toLocaleDateString('ko-KR')}</small>
-            </li>
-          ))}
-        </ul>
-      </main>
-    </div>
-  </body>
-</html>
+  <ul>
+    {posts.map(post => (
+      <li class="post-card">
+        <a href={post.url} class="post-title">{post.title}</a><br />
+        <small class="post-date">{new Date(post.date).toLocaleDateString('ko-KR')}</small>
+      </li>
+    ))}
+  </ul>
+
+  <p><a href="/">← 홈으로 돌아가기</a></p>
+</BaseLayout>
